@@ -1,25 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Scroll animation for sections
+    // --- Intersection Observer for Sections and List Items ---
     const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
-                }
-            });
-        },
-        { threshold: 0.1 }
-    );
 
-    sections.forEach((section) => {
-        observer.observe(section);
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Animate the section itself
+                entry.target.classList.add("visible");
+
+                // Animate list items within the section with a stagger
+                const listItems = entry.target.querySelectorAll("ul li");
+                listItems.forEach((item, index) => {
+                    item.style.transitionDelay = `${index * 100}ms`;
+                    item.classList.add("list-item-visible");
+                });
+
+                // Stop observing the section once it's visible
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
     });
 
-    // Dark mode toggle
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    // --- Dark Mode Toggle ---
     const toggleBtn = document.getElementById("toggle-theme");
     const body = document.body;
-    const backToTopBtn = document.getElementById("back-to-top");
 
     const currentTheme = localStorage.getItem("theme");
     if (currentTheme === "dark") {
@@ -36,16 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("theme", isDark ? "dark" : "light");
     });
 
-    // Back to top button
+    // --- Back to Top Button ---
+    const backToTopBtn = document.getElementById("back-to-top");
+    
     window.addEventListener("scroll", () => {
         if (window.pageYOffset > 300) {
-            backToTopBtn.style.display = "block";
+            if (backToTopBtn) backToTopBtn.style.display = "block";
         } else {
-            backToTopBtn.style.display = "none";
+            if (backToTopBtn) backToTopBtn.style.display = "none";
         }
     });
 
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
 });
