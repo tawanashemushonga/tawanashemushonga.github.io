@@ -4,6 +4,7 @@
   --accent-color: #0056b3;
   --card-bg: #f9f9f9;
   --header-bg: #004080;
+  --accent-color-translucent: rgba(0, 86, 179, 0.1);
 }
 
 body.dark-mode {
@@ -12,6 +13,7 @@ body.dark-mode {
   --accent-color: #4da6ff;
   --card-bg: #1e1e1e;
   --header-bg: #1a1a1a;
+  --accent-color-translucent: rgba(77, 166, 255, 0.1);
 }
 
 body {
@@ -59,11 +61,12 @@ header nav a {
   margin: 0 0.5rem;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color 0.2s, transform 0.2s;
 }
 
 header nav a:hover {
   color: var(--accent-color);
+  transform: translateY(-2px);
 }
 
 .btn {
@@ -74,12 +77,13 @@ header nav a:hover {
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s;
   border: none;
   cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .btn:hover {
+  transform: translateY(-2px);
   background-color: #004494;
 }
 
@@ -89,6 +93,9 @@ header nav a:hover {
   color: #fff;
   font-size: 1.2rem;
   padding: 5px 10px;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 main {
@@ -98,13 +105,21 @@ main {
 section {
   padding: 1.5rem;
   margin: 1rem auto;
-  max-width: 800px;
+  max-width: 960px; /* Increased width to reduce side space */
   background: var(--card-bg);
   border-radius: 8px;
   border-left: 4px solid var(--accent-color);
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode section:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
 section.visible {
@@ -126,11 +141,20 @@ ul {
 
 ul li {
     margin-bottom: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+ul li:hover {
+    transform: translateX(5px);
+    background-color: var(--accent-color-translucent);
 }
 
 .icon-list i {
   color: var(--accent-color);
-  margin-right: 0.5rem;
+  margin-right: 0.8rem;
+  width: 20px;
 }
 
 footer {
@@ -147,4 +171,49 @@ footer {
     right: 20px;
     display: none;
     z-index: 100;
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 768px) {
+    header {
+        justify-content: center;
+    }
+    .toggle-theme {
+        position: relative;
+        top: 0;
+        right: 0;
+    }
+    h1 {
+        font-size: 1.6em;
+    }
+    section {
+        padding: 1.2rem;
+        margin: 0.8rem auto;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 15px;
+    }
+    header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    header .header-content {
+        order: 2;
+    }
+    .toggle-theme {
+        order: 1;
+        align-self: flex-end;
+    }
+    main {
+        padding: 0.5rem;
+    }
+    section {
+        margin: 0.5rem auto;
+    }
+    .btn {
+        padding: 10px 18px;
+    }
 }
