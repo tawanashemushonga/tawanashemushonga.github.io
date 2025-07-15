@@ -1,23 +1,27 @@
 :root {
-  --bg-color: #ffffff;
-  --text-color: #333;
-  --accent-color: #0056b3;
-  --card-bg: #f9f9f9;
-  --header-bg: #004080;
-  --accent-color-translucent: rgba(0, 86, 179, 0.1);
+  --bg-color: #f5f7fa;
+  --text-color: #2d3748;
+  --accent-color: #38b2ac;
+  --card-bg: #ffffff;
+  --header-bg: #2d3748;
+  --shadow-color: rgba(45, 55, 72, 0.1);
 }
 
 body.dark-mode {
-  --bg-color: #121212;
-  --text-color: #e0e0e0;
-  --accent-color: #4da6ff;
-  --card-bg: #1e1e1e;
-  --header-bg: #1a1a1a;
-  --accent-color-translucent: rgba(77, 166, 255, 0.1);
+  --bg-color: #1a202c;
+  --text-color: #e2e8f0;
+  --accent-color: #4fd1c5;
+  --card-bg: #2d3748;
+  --header-bg: #171923;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.6;
@@ -30,51 +34,51 @@ header {
   background-color: var(--header-bg);
   color: white;
   text-align: center;
-  padding: 1rem;
+  padding: 0.8rem 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px var(--shadow-color);
+  flex-wrap: wrap;
 }
 
 header .header-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 1.8em;
+  margin: 0;
+  font-size: 1.6em;
 }
 
 header p {
-    margin: 0.2rem 0 0.5rem;
+  margin: 0.1rem 0 0.5rem;
+  font-weight: 300;
 }
 
 header nav a {
-  color: #fff;
-  margin: 0 0.5rem;
+  color: white;
+  margin: 0 0.6rem;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s, transform 0.2s;
+  font-weight: 400;
+  transition: color 0.2s;
 }
 
 header nav a:hover {
   color: var(--accent-color);
-  transform: translateY(-2px);
 }
 
 .btn {
   display: inline-block;
   background-color: var(--accent-color);
   color: #fff;
-  padding: 8px 16px;
-  border-radius: 5px;
+  padding: 8px 18px;
+  border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
   border: none;
@@ -83,43 +87,35 @@ header nav a:hover {
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  background-color: #004494;
+  transform: translateY(-3px);
+  filter: brightness(1.1);
 }
 
 .toggle-theme {
-  background: none;
-  border: 1px solid #fff;
-  color: #fff;
-  font-size: 1.2rem;
-  padding: 5px 10px;
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: 1px solid #fff;
+  font-size: 1.2rem;
+  padding: 5px 10px;
 }
 
 main {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 section {
-  padding: 1.5rem;
-  margin: 1rem auto;
-  max-width: 960px; /* Increased width to reduce side space */
+  padding: 2rem;
+  margin: 1.5rem auto;
+  max-width: 1100px; /* Increased width to reduce edge space */
   background: var(--card-bg);
   border-radius: 8px;
-  border-left: 4px solid var(--accent-color);
+  box-shadow: 0 4px 12px var(--shadow-color);
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
-}
-
-section:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-body.dark-mode section:hover {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  scroll-margin-top: 80px; /* Fixes anchor links being hidden by header */
 }
 
 section.visible {
@@ -130,25 +126,26 @@ section.visible {
 h2 {
   color: var(--accent-color);
   border-bottom: 2px solid var(--accent-color);
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.5rem;
   margin-top: 0;
 }
 
 ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
+/* Base state for list item animations */
 ul li {
-    margin-bottom: 0.5rem;
-    padding: 0.3rem 0.5rem;
-    border-radius: 4px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-ul li:hover {
-    transform: translateX(5px);
-    background-color: var(--accent-color-translucent);
+/* Animated state for list items */
+ul li.list-item-visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .icon-list i {
@@ -157,63 +154,55 @@ ul li:hover {
   width: 20px;
 }
 
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 footer {
   text-align: center;
-  padding: 1rem;
-  background-color: #222;
-  color: white;
+  padding: 1.5rem;
+  background-color: var(--header-bg);
+  color: #a0aec0;
   font-size: 0.9em;
 }
 
 #back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: none;
-    z-index: 100;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  z-index: 100;
 }
 
 /* --- Responsiveness --- */
 @media (max-width: 768px) {
-    header {
-        justify-content: center;
-    }
-    .toggle-theme {
-        position: relative;
-        top: 0;
-        right: 0;
-    }
-    h1 {
-        font-size: 1.6em;
-    }
-    section {
-        padding: 1.2rem;
-        margin: 0.8rem auto;
-    }
+  section {
+    padding: 1.5rem;
+    margin: 1rem auto;
+    scroll-margin-top: 120px; /* Adjust anchor fix for taller wrapped header */
+  }
+  .toggle-theme {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: 0.5rem;
+  }
+  header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 @media (max-width: 480px) {
-    body {
-        font-size: 15px;
-    }
-    header {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    header .header-content {
-        order: 2;
-    }
-    .toggle-theme {
-        order: 1;
-        align-self: flex-end;
-    }
-    main {
-        padding: 0.5rem;
-    }
-    section {
-        margin: 0.5rem auto;
-    }
-    .btn {
-        padding: 10px 18px;
-    }
+  main {
+    padding: 0.5rem;
+  }
+  section {
+    padding: 1rem;
+  }
 }
